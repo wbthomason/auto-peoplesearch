@@ -24,9 +24,12 @@ def rfind_or_end(content, search):
 #Quick method to grab the name from the page. Not flexible, but the format is unikely to change.
 def parse_name(htmldata):
 	page = BeautifulSoup.BeautifulSoup(htmldata)
-	name = page.table.tr.td.b.font.contents[0]
-	name = name[:name.find('(')-1]
-	return str(name)
+	table = page.table
+	if table is not None:
+		name = table.tr.td.b.font.contents[0]
+		name = name[:name.find('(')-1]
+		return str(name)
+	return "Not found"
 
 #Ugly and could probably be optimized. Could definitely be extended, which might happen. This will remain the simple utility it currently is for now, though.
 if __name__ == '__main__':	
