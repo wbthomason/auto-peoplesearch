@@ -49,14 +49,14 @@ if __name__ == '__main__':
 	aliases = data_file.readlines()
 
 	for alias in aliases:
-		alias = alias[:find_or_end(alias,'@')]
+		alias = alias[:find_or_end(alias,'@')].strip()
 		print("Searching for", alias, "...")
 		data = urllib.parse.urlencode({'whitepages': alias})
 		data = data.encode('utf-8')
 		alias_request = urllib.request.Request("http://www.virginia.edu/cgi-local/ldapweb", headers = alias_headers)
 		result = urllib.request.urlopen(alias_request, data)
 		name = parse_name(result.read().decode('utf-8'))
-		print(alias,"is",name)
+		print(alias + " is " +name)
 		results_file.write(alias + ": " + name+'\n')
 		print("Waiting to avoid getting banned...")
 		time.sleep(0.05)
