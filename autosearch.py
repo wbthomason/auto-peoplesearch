@@ -51,10 +51,8 @@ if __name__ == '__main__':
 	for alias in aliases:
 		alias = alias[:find_or_end(alias,'@')].strip()
 		print("Searching for", alias, "...")
-		data = urllib.parse.urlencode({'whitepages': alias})
-		data = data.encode('utf-8')
-		alias_request = urllib.request.Request("http://www.virginia.edu/cgi-local/ldapweb", headers = alias_headers)
-		result = urllib.request.urlopen(alias_request, data)
+		alias_request = urllib.request.Request("http://www.virginia.edu/cgi-local/ldapweb?"+alias, headers = alias_headers)
+		result = urllib.request.urlopen(alias_request)
 		name = parse_name(result.read().decode('utf-8'))
 		print(alias + " is " +name)
 		results_file.write(alias + ": " + name+'\n')
